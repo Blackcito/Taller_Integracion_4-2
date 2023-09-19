@@ -6,7 +6,11 @@ export const registroStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+<<<<<<< Updated upstream
     backgroundColor: 'red',
+=======
+    backgroundColor: '#fff',
+>>>>>>> Stashed changes
   },
   titulo: {
     fontSize: 24,
