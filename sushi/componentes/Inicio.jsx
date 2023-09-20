@@ -15,9 +15,9 @@ export default function HomePage() {
   const redirectToBeber = () => {
     navigation.navigate('Beber'); // Asegúrate de que 'Register' sea el nombre de la pantalla de registro en tu aplicación
   };
-  const redirectToPostre = () => {
-    navigation.navigate('Postre'); // Asegúrate de que 'Register' sea el nombre de la pantalla de registro en tu aplicación
-  };
+  // const redirectToPostre = () => {
+  //   navigation.navigate('Postre'); // Asegúrate de que 'Register' sea el nombre de la pantalla de registro en tu aplicación
+  // };
   const redirectToLogin = () => {
     navigation.navigate('Login'); // Asegúrate de que 'Register' sea el nombre de la pantalla de registro en tu aplicación
   };
@@ -35,9 +35,9 @@ export default function HomePage() {
         <TouchableOpacity style={styles.category} onPress={redirectToBeber}>
           <Text>Bebestibles</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.category} onPress={redirectToPostre}>
+        {/* <TouchableOpacity style={styles.category} onPress={redirectToPostre}>
           <Text>Postres</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
   
       {/* Botón "¿Quieres registrarte?" */}

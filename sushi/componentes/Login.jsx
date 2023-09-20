@@ -1,31 +1,22 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import { registroStyles } from './style'; // Importa el archivo de estilo
-<<<<<<< Updated upstream
-=======
 import { useNavigation } from '@react-navigation/native';
->>>>>>> Stashed changes
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-<<<<<<< Updated upstream
-=======
   const navigation = useNavigation();
   const RedirectToRegister = () => {
     navigation.navigate('Register'); // Asegúrate de que 'Register' sea el nombre de la pantalla de registro en tu aplicación
   };
 
->>>>>>> Stashed changes
   const iniciarSesion = () => {
     // Agrega la lógica para iniciar sesión aquí
     console.log('Email:', email);
     console.log('Contraseña:', password);
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
   };
 
   return (
@@ -47,10 +38,7 @@ export default function Login() {
         secureTextEntry
       />
       <Button title="Iniciar Sesión" onPress={iniciarSesion} />
-<<<<<<< Updated upstream
-=======
       <Text onPress={RedirectToRegister}>¿Aún no tienes cuenta?, ¡Regístrate aquí!</Text>
->>>>>>> Stashed changes
     </View>
   );
 }
