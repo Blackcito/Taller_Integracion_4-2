@@ -7,12 +7,16 @@ import Comida from './componentes/Comida';
 import Beber from './componentes/Beber';
 import Login from './componentes/Login';
 import NavBar from './componentes/NavBar';
+import { StyleSheet, View } from 'react-native'; // Importa StyleSheet y View
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    // <NavigationContainer>
+    <View style={styles.container}>
+    <NavBar />
+    </View>
+    ///</View>
     //   <Stack.Navigator initialRouteName="Home">
     //     <Stack.Screen name="Home" component={HomePage} />
     //     <Stack.Screen name="Register" component={RegisterPage} />
@@ -23,6 +27,10 @@ export default function App() {
     //   </Stack.Navigator>
     // </NavigationContainer>
     
-    <NavBar />
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
