@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 
-const BannerPedidos = () => {
+const BannerMenu = () => {
   const navigation = useNavigation();
 
   const handleImagePress = () => {
@@ -11,17 +11,17 @@ const BannerPedidos = () => {
   };
   return (
     <View>
-      <Text style={styles.text}>Pedidos personalizados</Text>
+      <Text style={styles.text}>Catalogo de productos</Text>
       <TouchableOpacity onPress={handleImagePress}>
         <Image
-          source={require('C:/Users/marih/OneDrive/Escritorio/Integracion 4/Taller_Integracion_4-2/sushi/Imagenes/banner1.jpg')}
+          source={require('../../assets/Banners/banner2.jpg')}
           style={styles.imagen}
         />
       </TouchableOpacity>
     </View>
   );
 };
-  export default BannerPedidos
+  export default BannerMenu
   
   const styles = StyleSheet.create({
     text: {
