@@ -2,12 +2,56 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const { Client } = require('pg');
+const { connectDB } = require('./db/db');
+const { registerUser } = require('./controller/register');
+const { loginUser } = require('./controller/login');
 
 
 // Habilitar CORS para todas las rutas
 app.use(cors());
-
+app.use(express.json());
 //BASE DE DATOS
+
+connectDB();
+
+app.post('/register', async (req, res) => {
+  try {
+    const { nombre, email, pass } = req.body;
+    
+    // Verifica si los datos requeridos existen en la solicitud
+    if (!nombre || !email || !pass) {
+      return res.status(400).json({ error: 'Faltan datos requeridos.' });
+    }
+
+    await registerUser(nombre, email, pass);
+    res.status(201).json({ message: 'Usuario registrado correctamente' });
+  } catch (error) {
+    console.error('Error al registrar al usuario:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.post('/login', async (req, res) => {
+  try {
+    const { email, pass } = req.body;
+
+    if (!email || !pass) {
+      return res.status(400).json({ error: 'Faltan datos requeridos.' });
+    }
+
+    // Implementa la lógica para verificar las credenciales del usuario
+    const user = await loginUser(email, pass);
+
+    if (user) {
+      res.status(200).json({ message: 'Inicio de sesión exitoso' });
+    } else {
+      res.status(401).json({ error: 'Credenciales incorrectas' });
+    }
+  } catch (error) {
+    console.error('Error al iniciar sesión:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
 
 const client = new Client({
   connectionString: 'postgres://sbadpryx:Qm8lZbio6bbNyqIWTydZcEq_7TA9akGb@berry.db.elephantsql.com/sbadpryx',

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import { registroStyles } from './style';// Importa el archivo de estilo
@@ -7,11 +8,24 @@ export default function Registro() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const registrarUsuario = () => {
-    // Agrega la lógica para registrar al usuario aquí
-    console.log('Nombre:', nombre);
-    console.log('Email:', email);
-    console.log('Contraseña:', password);
+  const registrarUsuario = async () => {
+    try {
+      // Define los datos del usuario a registrar
+      const nuevoUsuario = {
+        nombre: nombre,
+        email: email,
+        pass: password, // Debes asegurarte de que coincide con la clave en tu servidor
+      };
+  
+      // Realiza una solicitud HTTP POST al servidor
+      const response = await axios.post('http://192.168.1.147:3000/register', nuevoUsuario);
+  
+      // Procesa la respuesta del servidor aquí
+      console.log('Respuesta del servidor:', response.data);
+    } catch (error) {
+      // Maneja errores aquí
+      console.error('Error al registrar al usuario:', error);
+    }
   };
 
   return (

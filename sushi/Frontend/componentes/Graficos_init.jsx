@@ -17,7 +17,7 @@ export default function Grafico() {
 
   useEffect(() => {
     axios
-      .get("http://192.168.1.88:3000/api/ventas-por-dia")
+      .get("http://192.168.1.147:3000/api/ventas-por-dia")
       .then((response) => {
         const data = response.data;
         setDiaSemana(data.map((row) => row.diasemana));
