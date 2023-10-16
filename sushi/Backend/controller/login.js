@@ -1,26 +1,34 @@
-const { client } = require('../db/db'); // Importa la instancia de cliente de db.js
+const { db } = require('../db/db'); // Importa la instancia de cliente de db.js
+const bcrypt = require('bcrypt'); // Libreria que se usara para encriptar la contraseña
 
 const loginUser = async (email, pass) => {
   try {
-    // Define la consulta SQL para buscar un usuario con el correo electrónico y la contraseña proporcionados
+    // Consulta SQL para obtener el usuario por su correo electrónico
     const query = `
-      SELECT * FROM "User"
-      WHERE "Email" = $1 AND "Pass" = $2
+      SELECT * FROM "clientes"
+      WHERE "email" = $1
     `;
 
-    // Parámetros de la consulta
-    const values = [email, pass];
-
     // Ejecuta la consulta SQL
-    const result = await client.query(query, values);
+    const usuario = await db.oneOrNone(query, [email]);
 
-    if (result.rows.length === 1) {
-      // Usuario autenticado
-      console.log('Usuario autenticado exitosamente');
-      return result.rows[0];
+    if (usuario) {
+      // Compara la contraseña ingresada con la contraseña almacenada en la base de datos
+
+      const contrasenaValida = await bcrypt.compare(pass, usuario.password);
+
+      if (contrasenaValida) {
+        // Contraseña válida, devuelve el usuario autenticado
+        console.log('Usuario autenticado exitosamente');
+        return usuario;
+      } else {
+        // Contraseña incorrecta
+        console.log('Contraseña incorrecta');
+        return null;
+      }
     } else {
- 
-      console.log('Credenciales incorrectas');
+      // Usuario no encontrado
+      console.log('Usuario no encontrado');
       return null;
     }
   } catch (error) {

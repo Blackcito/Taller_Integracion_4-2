@@ -1,22 +1,44 @@
-const { client } = require('../db/db'); // Importa la instancia de cliente de db.js
-
-const registerUser = async (nombre, email, pass) => {
+const { db } = require('../db/db'); // Importa la instancia de cliente de db.js
+const bcrypt = require('bcrypt'); // Libreria que se usara para encriptar la contraseña
+const registerUser = async (user, email, pass) => {
   try {
-    // Define la consulta SQL para insertar un nuevo usuario en la tabla "User"
-    const query = `
-      INSERT INTO "User" ("Nombre", "Email", "Pass")
-      VALUES ($1, $2, $3)
-    `;
+   
+    // Consulta para ver si el correo o el nombre del usuario existen en la base de datos
+    const usuarioExistente = await db.oneOrNone('SELECT * FROM clientes WHERE email = $1 OR id_usuario = $2', [
+      email,
+      user,
+    ]);
+
+    // Si el usuario ya existe, enviar un mensaje de error 
+
+    if (usuarioExistente) {
+      const error = new Error('El correo o el nombre de usuario ya están registrados.');
+      error.statusCode = 400; // Establece el código de estado 400 (Bad Request) en el objeto de error
+      throw error;
+    }
+
+    // Genera un salt (En este caso seran 10 rondas de hashing para asegurar la contraseña)
+    const saltRounds = 10;
+
+    // Se genera el hash de la contraseña, la cual toma como argumentos la contreña y el valor de rondas de hashing
+    const hashedPassword = await bcrypt.hash(pass, saltRounds);
 
     // Parámetros de la consulta
-    const values = [nombre, email, pass];
+    const values = [user, email, hashedPassword];
+
+    const query = `
+    INSERT INTO "clientes" ("id_usuario", "email", "password")
+    VALUES ($1, $2, $3)
+  `;
+
 
     // Ejecuta la consulta SQL con los valores proporcionados
-    await client.query(query, values);
-    console.log('Usuario registrado exitosamente');
+    await db.none(query, values);
   } catch (error) {
-    console.error('Error al registrar al usuario:', error);
+    throw error;
   }
+
+
 };
 
 module.exports = { registerUser };
