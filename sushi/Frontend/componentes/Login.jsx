@@ -22,7 +22,7 @@ export default function Login() {
       };
   
       // Realiza una solicitud HTTP POST al servidor
-      const response = await axios.post('http://192.168.1.147:3000/login', user);
+      const response = await axios.post('https://api-taller4-fswo.onrender.com/login', user);
   
       // Procesa la respuesta del servidor aquí
       console.log('Respuesta del servidor:', response.data);

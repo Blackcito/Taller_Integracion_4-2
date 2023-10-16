@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Comida from "./Comida";
 import Beber from "./Beber";
 import Graficos_init from "./Graficos_init";
+import Graficos_unit from "./Grafico_unit"
 import Cuenta from "./Cuenta";
 import { NavigationContainer } from "@react-navigation/native";
 import HomePage from "./Inicio";
@@ -18,6 +19,7 @@ export default function NavBar() {
     Beber: "md-beer",
     Usuario: "person",
     Graficos: "bar-chart-sharp",
+    Grafico: "bar-chart"
   };
   return (
     <NavigationContainer>
@@ -72,6 +74,14 @@ export default function NavBar() {
           }}
         />
 
+        <Tab.Screen
+          name="Grafico"
+          component={Graficos_unit}
+          options={{
+            headerTitle: "Grafico",
+            headerTitleAlign: "center", // Centra el título en el encabezado
+          }}
+        />
         <Tab.Screen
           name="Usuario"
           component={Cuenta}

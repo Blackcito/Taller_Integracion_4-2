@@ -12,13 +12,13 @@ export default function Registro() {
     try {
       // Define los datos del usuario a registrar
       const nuevoUsuario = {
-        nombre: nombre,
+        user: nombre,
         email: email,
         pass: password, // Debes asegurarte de que coincide con la clave en tu servidor
       };
   
       // Realiza una solicitud HTTP POST al servidor
-      const response = await axios.post('http://192.168.1.147:3000/register', nuevoUsuario);
+      const response = await axios.post('https://api-taller4-fswo.onrender.com/register', nuevoUsuario);
   
       // Procesa la respuesta del servidor aquí
       console.log('Respuesta del servidor:', response.data);
