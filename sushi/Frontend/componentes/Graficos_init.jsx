@@ -4,16 +4,16 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import {styles_grafico_init} from './style'
 import { LineChart } from "react-native-gifted-charts";
-import Grafico from "./Grafico_unit"
 
 
 
-export default function Graficos_grupales() {
+
+export default function Graficos() {
 
   const navigation = useNavigation();
   const RedirectToGrafico = () => {
     // Navega a la pantalla de gráfica en grande cuando se hace clic
-    navigation.navigate(Grafico);
+    navigation.navigate("Grafico");
   };
   const [lineData, setLineData] = useState([]);
 

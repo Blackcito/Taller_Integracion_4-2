@@ -1,13 +1,10 @@
-import { View, Text } from "react-native";
+
 import React from "react";
-import { Header, HeaderTitle } from "@react-navigation/elements";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Comida from "./Comida";
 import Beber from "./Beber";
 import Graficos_init from "./Graficos_init";
-import Graficos_unit from "./Grafico_unit"
 import Cuenta from "./Cuenta";
-import { NavigationContainer } from "@react-navigation/native";
 import HomePage from "./Inicio";
 import { Ionicons } from "@expo/vector-icons"; // Puedes utilizar un conjunto de iconos, como Ionicons, para los iconos
 
@@ -22,7 +19,6 @@ export default function NavBar() {
     Grafico: "bar-chart"
   };
   return (
-    <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -75,19 +71,10 @@ export default function NavBar() {
         />
 
         <Tab.Screen
-          name="Grafico"
-          component={Graficos_unit}
-          options={{
-            headerTitle: "Grafico",
-            headerTitleAlign: "center", // Centra el título en el encabezado
-          }}
-        />
-        <Tab.Screen
           name="Usuario"
           component={Cuenta}
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
-    </NavigationContainer>
   );
 }
