@@ -1,17 +1,33 @@
-import React from 'react';
-import { View } from 'react-native';
-import { Text } from 'react-native-elements';
-import Login from './Login';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Registro from './Register';
+import React, { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { View, Text, TouchableOpacity } from "react-native";
 
+export default function Cuenta() {
+  const navigation = useNavigation();
 
-export default function Cuenta(){
-    const nav = createBottomTabNavigator();
-    return(
-        <nav.Navigator >
-            <nav.Screen name="Login" component={Login} />
-            <nav.Screen name='Register' component={Registro} />
-        </nav.Navigator>
-    );
-};
+  useEffect(() => {
+    // Aquí podría haber lógica adicional si es necesario
+  }, []);
+
+  const RedirectToLogin = () => {
+    navigation.navigate("Login");
+  };
+
+  const RedirectToRegister = () => {
+    navigation.navigate("Register");
+  };
+
+  return (
+    <View>
+      <Text>Haz clic en "Cuenta" para iniciar sesión</Text>
+      <TouchableOpacity onPress={RedirectToLogin}>
+        <Text>Ir a Inicio de Sesión</Text>
+      </TouchableOpacity>
+
+      {/* Agrega un enlace o botón para ir a la pantalla de registro */}
+      <TouchableOpacity onPress={RedirectToRegister}>
+        <Text>¿Aún no tienes cuenta?, ¡Regístrate aquí!</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}

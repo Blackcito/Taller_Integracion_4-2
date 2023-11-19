@@ -5,9 +5,6 @@ import { useNavigation } from "@react-navigation/native";
 import {styles_grafico_init} from './style'
 import { LineChart } from "react-native-gifted-charts";
 
-
-
-
 export default function Graficos() {
 
   const navigation = useNavigation();

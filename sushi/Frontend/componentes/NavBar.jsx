@@ -7,6 +7,7 @@ import Graficos_init from "./Graficos_init";
 import Cuenta from "./Cuenta";
 import HomePage from "./Inicio";
 import { Ionicons } from "@expo/vector-icons"; // Puedes utilizar un conjunto de iconos, como Ionicons, para los iconos
+import Login from "./Login";
 
 export default function NavBar() {
   const Tab = createBottomTabNavigator();
@@ -72,8 +73,11 @@ export default function NavBar() {
 
         <Tab.Screen
           name="Usuario"
-          component={Cuenta}
-          options={{ headerShown: false }}
+          component={Login}
+          options={{
+            headerTitle: "Iniciar Sesión",
+            headerTitleAlign: "center", // Centra el título en el encabezado
+          }}
         />
       </Tab.Navigator>
   );

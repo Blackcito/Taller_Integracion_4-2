@@ -5,10 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Grafico from "./componentes/Grafico_unit"
 import Navbar from "./componentes/NavBar"
+import Registro from "./componentes/Register"
 
 const Stack = createNativeStackNavigator();
-
-
 
 function App() {
   return (
@@ -16,6 +15,7 @@ function App() {
       <Stack.Navigator>
         <Stack.Screen name="Navbar" component={Navbar} options={{headerShown: false}}/>
         <Stack.Screen name="Grafico" component={Grafico} />
+        <Stack.Screen name="Registro" component={Registro} />
       </Stack.Navigator>
     </NavigationContainer>
   );

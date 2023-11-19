@@ -1,34 +1,50 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
-import { registroStyles } from './style'; // Importa el archivo de estilo
+import { View, Text, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
+import { registroStyles } from './style';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
   const RedirectToRegister = () => {
-    navigation.navigate('Register'); // Asegúrate de que 'Register' sea el nombre de la pantalla de registro en tu aplicación
+    // Navega a la pantalla de gráfica en grande cuando se hace clic
+    navigation.navigate("Registro");
   };
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
 
   const logearUsuario = async () => {
     try {
-      // Define los datos del usuario a registrar
+      if (!email || !password) {
+        Alert.alert('Campos incompletos', 'Por favor, completa todos los campos.');
+        return;
+      }
+
       const user = {
         email: email,
-        pass: password, // Debes asegurarte de que coincide con la clave en tu servidor
+        pass: password,
       };
-  
-      // Realiza una solicitud HTTP POST al servidor
+
       const response = await axios.post('https://api-taller4-fswo.onrender.com/login', user);
-  
-      // Procesa la respuesta del servidor aquí
-      console.log('Respuesta del servidor:', response.data);
+
+      // Verificar si la respuesta del servidor indica un inicio de sesión exitoso
+      if (response.data && response.data.success) {
+        // Almacenar información de sesión (token, por ejemplo) en el sistema de gestión de estado o en AsyncStorage
+        // Esto depende de la arquitectura de tu aplicación
+        // navigation.navigate('Home'); // Redirigir a la pantalla principal después del inicio de sesión exitoso
+        console.log('Inicio de sesión exitoso:', response.data.message);
+      } else {
+        // Mostrar mensaje de error del servidor
+        Alert.alert('Error', response.data.message || 'Error al iniciar sesión.');
+      }
     } catch (error) {
-      // Maneja errores aquí
-      console.error('Error al iniciar sesioón:', error);
+      // Manejar errores de red u otros errores inesperados
+      console.error('Error al iniciar sesión:', error);
+      Alert.alert('Error', 'Ha ocurrido un error. Por favor, inténtalo de nuevo.');
     }
   };
 
@@ -51,7 +67,10 @@ export default function Login() {
         secureTextEntry
       />
       <Button title="Iniciar Sesión" onPress={logearUsuario} />
-      <Text onPress={RedirectToRegister}>¿Aún no tienes cuenta?, ¡Regístrate aquí!</Text>
+      <View>
+        <Text onPress={RedirectToRegister}>¿Aún no tienes cuenta?, ¡Regístrate aquí!</Text>
+      </View>
+        
     </View>
   );
 }

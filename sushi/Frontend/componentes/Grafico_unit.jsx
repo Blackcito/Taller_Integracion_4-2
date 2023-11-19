@@ -5,12 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import {styles_grafico_init} from './style'
 import { LineChart,BarChart  } from "react-native-gifted-charts";
 
-
-
-
 export default function Grafico() {
-
-
   const [lineData, setLineData] = useState([]);
 
   useEffect(() => {
@@ -45,16 +40,9 @@ export default function Grafico() {
   // Una vez que lineData tiene datos, puedes renderizar el gráfico
   return (
 <View styles={styles.graf}>
-     
-        
 
           <Text style={styles_grafico_init.titulos}>Ventas 1</Text>
           <BarChart   initialSpacing={5} height={500}   data={lineData}  />
-
-       
-      
-
-        
     </View>
   );
 }
