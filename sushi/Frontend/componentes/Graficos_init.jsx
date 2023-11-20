@@ -19,15 +19,19 @@ export default function Graficos() {
       .get("https://api-taller4-fswo.onrender.com/api/ventas-por-dia")
       .then((response) => {
         const data = response.data;
+        
         // Crear directamente lineData utilizando response.data
         const lineData = data.map((registro) => ({
           label: registro.diasemana,
-          value: parseInt(registro.cantidadventas, 10),
+          value: parseInt(registro.cantidadventas),
+          
         }));
-
+        
         // Asignar lineData a tus estados
         // Establecer lineData en el estado
+
         setLineData(lineData);
+        
       })
       .catch((error) => {
         console.error("Error al obtener datos de ventas:", error);
