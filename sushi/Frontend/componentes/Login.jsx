@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, Alert, TouchableOpacity } from 'react-na
 import { registroStyles } from './style';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
 
@@ -32,11 +33,15 @@ export default function Login() {
       const response = await axios.post('https://api-taller4-fswo.onrender.com/login', user);
 
       // Verificar si la respuesta del servidor indica un inicio de sesión exitoso
-      if (response.data && response.data.success) {
+      if (response.status === 200) {
         // Almacenar información de sesión (token, por ejemplo) en el sistema de gestión de estado o en AsyncStorage
         // Esto depende de la arquitectura de tu aplicación
         // navigation.navigate('Home'); // Redirigir a la pantalla principal después del inicio de sesión exitoso
+        await AsyncStorage.setItem('token', response.data.token);
+
+        navigation.navigate('Navbar');
         console.log('Inicio de sesión exitoso:', response.data.message);
+
       } else {
         // Mostrar mensaje de error del servidor
         Alert.alert('Error', response.data.message || 'Error al iniciar sesión.');
