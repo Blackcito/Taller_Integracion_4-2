@@ -12,41 +12,56 @@ export default function Graficos() {
     // Navega a la pantalla de gráfica en grande cuando se hace clic
     navigation.navigate("Grafico");
   };
+
+  const RedirectToGrafico2 = () => {
+    // Navega a la pantalla de gráfica en grande cuando se hace clic
+    navigation.navigate("Grafico2");
+  };
   const [lineData, setLineData] = useState([]);
+const [lineData2, setLineData2] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("https://api-taller4-fswo.onrender.com/api/ventas-por-dia")
-      .then((response) => {
-        const data = response.data;
-        
-        // Crear directamente lineData utilizando response.data
-        const lineData = data.map((registro) => ({
-          label: registro.diasemana,
-          value: parseInt(registro.cantidadventas),
-          
-        }));
-        
-        // Asignar lineData a tus estados
-        // Establecer lineData en el estado
+useEffect(() => {
+  axios
+    .get("https://api-taller4-fswo.onrender.com/api/ventas-por-dia")
+    .then((response) => {
+      const data = response.data;
+      const formattedData = data.map((registro) => ({
+        label: registro.diainicial,
+        value: parseInt(registro.sumaventas, 10),
+      }));
 
-        setLineData(lineData);
-        
-      })
-      .catch((error) => {
-        console.error("Error al obtener datos de ventas:", error);
-      });
-  }, []);
+      setLineData(formattedData);
+    })
+    .catch((error) => {
+      console.error("Error al obtener datos de ventas:", error);
+    });
+}, []);
 
-  if (lineData.length === 0) {
-    // Aquí puedes mostrar un indicador de carga o un mensaje
-    return (
-      <View style={styles_grafico_init.chartContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
+useEffect(() => {
+  axios
+    .get("https://api-taller4-fswo.onrender.com/api/getPedidos")
+    .then((response) => {
+      const data = response.data;
+      const formattedData = data.map((pedidos) => ({
+        label: pedidos.id_usuario,
+        value: parseFloat(pedidos.total_compras),
+      }));
 
+      setLineData2(formattedData);
+    })
+    .catch((error) => {
+      console.error("Error al obtener datos de pedidos:", error);
+    });
+}, []);
+
+if (lineData.length === 0 || lineData2.length === 0) {
+  // Aquí puedes mostrar un indicador de carga o un mensaje
+  return (
+    <View style={styles_grafico_init.chartContainer}>
+      <ActivityIndicator size="large" color="#0000ff" />
+    </View>
+  );
+}
   // Una vez que lineData tiene datos, puedes renderizar el gráfico
   return (
 <View style={styles_grafico_init.container}>
@@ -59,18 +74,18 @@ export default function Graficos() {
         </View>
         <View style={styles_grafico_init.chartContainer}>
 
-        <TouchableOpacity onPress={RedirectToGrafico}>
+        <TouchableOpacity onPress={RedirectToGrafico2}>
           <Text style={styles_grafico_init.titulos}>Ventas 2</Text>
-          <LineChart  initialSpacing={5} width={120} height={250} data={lineData}  />
+          <LineChart  initialSpacing={5} width={120} height={250} data={lineData2}  />
           </TouchableOpacity>
         </View>
       </View>
       <View style={styles_grafico_init.rightCharts}>
         <View style={styles_grafico_init.chartContainer}>
 
-        <TouchableOpacity onPress={RedirectToGrafico}>
+        <TouchableOpacity onPress={RedirectToGrafico2}>
           <Text style={styles_grafico_init.titulos}>Ventas 3</Text>
-          <LineChart  initialSpacing={5} width={120} height={250} data={lineData}  />
+          <LineChart  initialSpacing={5} width={120} height={250} data={lineData2}  />
           </TouchableOpacity>
         </View>
         <View style={styles_grafico_init.chartContainer}>

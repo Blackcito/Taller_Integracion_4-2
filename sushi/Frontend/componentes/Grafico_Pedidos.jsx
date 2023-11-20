@@ -5,34 +5,34 @@ import { useNavigation } from "@react-navigation/native";
 import {styles_grafico_init} from './style'
 import { LineChart,BarChart  } from "react-native-gifted-charts";
 
-export default function Grafico() {
-  const [lineData, setLineData] = useState([]);
+export default function Grafico2() {
+  const [lineData2, setLineData2] = useState([]);
 
   useEffect(() => {
     axios
-      .get("https://api-taller4-fswo.onrender.com/api/ventas-por-dia")
+      .get("https://api-taller4-fswo.onrender.com/api/getPedidos")
       .then((response) => {
         
         const data = response.data;
         // Crear directamente lineData utilizando response.data
-        const lineData = data.map((registro) => ({
-          label: registro.diainicial,
-          value: parseInt(registro.sumaventas, 10),
+        const lineData2 = data.map((registro) => ({
+          label: registro.id_usuario,
+          value: parseFloat(registro.total_compras, 10),
           
         }));
         
         // Asignar lineData a tus estados
         // Establecer lineData en el estado
 
-        setLineData(lineData);
-        
+        setLineData2(lineData2);
+        console.log(lineData2)
       })
       .catch((error) => {
         console.error("Error al obtener datos de ventas:", error);
       });
   }, []);
 
-  if (lineData.length === 0) {
+  if (lineData2 === 0) {
     // Aquí puedes mostrar un indicador de carga o un mensaje
     return (
       <View style={styles_grafico_init.chartContainer}>
@@ -46,7 +46,7 @@ export default function Grafico() {
 <View styles={styles.graf}>
 
           <Text style={styles_grafico_init.titulos}>Ventas 1</Text>
-          <BarChart   initialSpacing={5} height={500}   data={lineData}  />
+          <BarChart   initialSpacing={5} height={500}   data={lineData2}  />
     </View>
   );
 }
