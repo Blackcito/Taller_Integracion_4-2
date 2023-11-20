@@ -34,12 +34,24 @@ export default function Login() {
 
       // Verificar si la respuesta del servidor indica un inicio de sesión exitoso
       if (response.status === 200) {
-        // Almacenar información de sesión (token, por ejemplo) en el sistema de gestión de estado o en AsyncStorage
-        // Esto depende de la arquitectura de tu aplicación
-        // navigation.navigate('Home'); // Redirigir a la pantalla principal después del inicio de sesión exitoso
+
+        const { message, token, usuario } = response.data;
+        
         await AsyncStorage.setItem('token', response.data.token);
 
-        navigation.navigate('Navbar');
+
+    
+        if (usuario.admin === true) {
+          // El valor de verify es true, puedes realizar acciones adicionales
+          navigation.navigate('Graficos');
+          console.log('Verificación admin');
+        } else {
+          // El valor de verify no es true, maneja la lógica correspondiente
+          navigation.navigate('Navbar');
+          console.log('Verificación no admin');
+        }
+
+        
         console.log('Inicio de sesión exitoso:', response.data.message);
 
       } else {
